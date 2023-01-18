@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:my="http://xmlns.jcp.org/jsf/composite/components"
+>
+<h:head>
+    <h:outputStylesheet library="css" name="index.css"/>
+</h:head>
+<h:body>
+    <div class="login-root padding-top--15   box-background--cyan200">
+        <div class="box-root padding-top--15 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+            <div class="box-root padding-top--24 padding-bottom--15 flex-flex flex-justifyContent--center">
+                <h1>Lab 3</h1>
+            </div>
+            <div class="formbg-outer">
+                <div class="formbg">
+                    <div class="formbg-inner padding-horizontal--48">
+                        <ui:include src="WEB-INF/templates/header.xhtml"/>
+                        <my:clock interval="5"/>
+                        <h:form id="stripe-login">
+                            <h:commandButton action="toMain" name="main" value="toMain" styleClass="field padding-bottom--24"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>
