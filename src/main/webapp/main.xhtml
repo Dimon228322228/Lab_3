@@ -4,43 +4,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
 >
 <h:head>
     <h:outputStylesheet library="css" name="main.css"/>
 </h:head>
-<h:body>
+<h:body styleClass="body">
+    <div class="wrapper-main">
+        <div class="return_to_index_button">
+            <h:form>
+                <h:commandButton styleClass="field padding-bottom--24 toIndex" action="toIndex" value="На вступительную"/>
+            </h:form>
+        </div>
     <div class="main">
-        <ui:include src="./WEB-INF/templates/header.xhtml"/>
-        <div class="main_content">
-            <div class="canvas">
-
-            </div>
-            <div class="right_side">
-                <div class="return_to_index_button">
-                    <h:form>
-                        <h:commandButton action="toIndex" value="toIndex"></h:commandButton>
-                    </h:form>
-                </div>
+        <ui:include styleClass="header" src="./WEB-INF/templates/header.xhtml"/>
+        <div class="right">
+            <div class="col-first">
+                <h:panelGroup layout="block" id="graph-wrapper" class="graph">
+                    <ui:include src="WEB-INF/templates/graph.xhtml">
+                        <ui:param name="listener" value=":graph-wrapper :history"/>
+                    </ui:include>
+                </h:panelGroup>
                 <div class="input_data">
-                    <div class="x_and_r">
-                        <div class="r">
-                            <ui:include src="./WEB-INF/templates/inputR.xhtml"/>
-                        </div>
-                        <div class="x">
-                            <ui:include src="./WEB-INF/templates/inputX.xhtml"/>
-                        </div>
+                    <h:form>
+                <div class="x_and_r">
+                    <div class="r">
+                        <ui:include src="./WEB-INF/templates/inputR.xhtml">
+                            <ui:param name="listener" value=":graph-wrapper"/>
+                        </ui:include>
                     </div>
-                    <div class="y">
-                        <ui:include src="./WEB-INF/templates/inputY.xhtml"/>
-                    </div>
-                    <div class="buttons">
-                        <h:commandLink action="submit" actionListener="#" value="Отправить"></h:commandLink>
-                        <h:commandLink action="reset" actionListener="#" value="Сбросить"></h:commandLink>
+                    <div class="x">
+                        <ui:include src="./WEB-INF/templates/inputX.xhtml"/>
                     </div>
                 </div>
-                <div class="history">
-                    <ui:include src="./WEB-INF/templates/history.xhtml"/>
+                <div class="y">
+                    <ui:include src="./WEB-INF/templates/inputY.xhtml"/>
                 </div>
+                <div class="buttons">
+                    <h:commandButton value="Отправить" styleClass="field padding-bottom--24" action="#{areaCheckBean.shoot(inputBean.x, inputBean.y, inputBean.r)}">
+                    </h:commandButton>
+                    <h:commandButton styleClass="field padding-bottom--24" id="clear-button" value="Сбросить" action="#{historyBean.clear}"/>
+                </div>
+                </h:form>
+                </div>
+            </div>
+            <div class="col-second">
+                <h:panelGroup id="history">
+                    <ui:include src="WEB-INF/templates/history.xhtml"/>
+                </h:panelGroup>
+            </div>
             </div>
         </div>
     </div>

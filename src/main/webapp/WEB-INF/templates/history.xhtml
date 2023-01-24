@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+   <h:panelGroup layout="block" styleClass="result blob" rendered="#{!historyBean.isEmpty()}">
+      <table class="response-table">
+         <tr class="content">
+            <td class="history-table-cell" colspan="2">
+               <div id="history">
+                  <p:dataTable value="#{historyBean.hitResults}" var="hitResult" styleClass="history-table"
+                               paginator="true" paginatorPosition="bottom" rows="4"
+                               paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="{startRecord}-{endRecord} из {totalRecords} записей"
+                               tableStyleClass="history-table" rowStyleClass="history-table-cell" headerClass="header-history-cell">
+                     <p:column>
+                        <f:facet name="header">X</f:facet>
+                        <h:outputText value="#{hitResult.coords.x}"/>
+                     </p:column>
+                     <p:column>
+                        <f:facet name="header">Y</f:facet>
+                        <h:outputText value="#{hitResult.coords.y}"/>
+                     </p:column>
+                     <p:column>
+                        <f:facet name="header">Радиус</f:facet>
+                        <h:outputText value="#{hitResult.coords.r}"/>
+                     </p:column>
+                     <p:column>
+                        <f:facet name="header">Результат</f:facet>
+                        <h:outputText value="#{hitResult.shot.message}"/>
+                     </p:column>
+                     <p:column>
+                        <f:facet name="header">Время обработки</f:facet>
+                        <h:outputText value="#{hitResult.shot.executionTime}">
+                           <f:converter converterId="nanosDurationConverter"/>
+                        </h:outputText>
+                     </p:column>
+                     <p:column>
+                        <f:facet name="header">Время отправки</f:facet>
+                        <h:outputText value="#{hitResult.currentTime}">
+                           <f:converter converterId="localeDateTimeConverter"/>
+                        </h:outputText>
+                     </p:column>
+                  </p:dataTable>
+               </div>
+            </td>
+         </tr>
+      </table>
+   </h:panelGroup>
+</ui:composition>
+</html>

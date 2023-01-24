@@ -9,11 +9,11 @@ function displayCanvas() {
     let yCenterClock = canvasHTML.height / 2;
 
     //Очистка экрана.
-    contextHTML.fillStyle = "#F5FFFA"; //цвет экрана ebf3eb
+    contextHTML.fillStyle = "#b0d1dc"; //цвет экрана ebf3eb
     contextHTML.fillRect(0, 0, canvasHTML.width, canvasHTML.height);
 
     //Рисуем контур часов
-    contextHTML.strokeStyle = "#000000";
+    contextHTML.strokeStyle = "#093ab6";
     contextHTML.lineWidth = 1;  //толщина линии
     contextHTML.beginPath();
     contextHTML.arc(xCenterClock, yCenterClock, radiusClock, 0, 2 * Math.PI, true);
@@ -40,7 +40,7 @@ function displayCanvas() {
     for (let th = 1; th <= 12; th++) {
         contextHTML.beginPath();
         contextHTML.font = 'bold 22px sans-serif ';     //цифры
-        contextHTML.strokeStyle = "#3C3901";         //цвет цифр
+        contextHTML.strokeStyle = "#044182";         //цвет цифр
 
         let xText = xCenterClock + (radiusNum - 30) * Math.cos(-30 * th * (Math.PI / 180) + Math.PI / 2);
         let yText = yCenterClock - (radiusNum - 30) * Math.sin(-30 * th * (Math.PI / 180) + Math.PI / 2);
@@ -94,7 +94,7 @@ function displayCanvas() {
     //Рисуем центр часов
     contextHTML.beginPath();
     contextHTML.strokeStyle = "#000000";    // рамка-круг
-    contextHTML.fillStyle = "#FCE804";      // цвет круга
+    contextHTML.fillStyle = "#04b2fc";      // цвет круга
     contextHTML.lineWidth = 3;              //толщина круга
     contextHTML.arc(xCenterClock, yCenterClock, 5, 0, 2 * Math.PI, true);
     contextHTML.stroke();
@@ -104,4 +104,4 @@ function displayCanvas() {
     return;
 }
 
-window.setInterval( displayCanvas, 5000);
+window.setInterval( displayCanvas, 1000);

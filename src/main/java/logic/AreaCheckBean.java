@@ -27,8 +27,8 @@ public class AreaCheckBean implements Serializable {
         Coordinates coordinates = Coordinates.create(x,y,r);
         if (r <= 0) return HitResult.fromHit(coordinates, ShotResult.create(false, "Invalid R value", startTime));
         if ( validation.isPointInShapes( x, y, r ) )
-            return HitResult.fromHit(coordinates, ShotResult.create(true, "That's a hit!", startTime));
-        return HitResult.fromHit(coordinates, ShotResult.create(false, "That's a miss", startTime));
+            return HitResult.fromHit(coordinates, ShotResult.create(true, "Попал", startTime));
+        return HitResult.fromHit(coordinates, ShotResult.create(false, "Промах", startTime));
 
     }
 }

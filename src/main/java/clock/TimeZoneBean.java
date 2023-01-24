@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Named("timeZoneBean")
 public class TimeZoneBean implements Serializable {
     @Getter
-    private String timezone = "America/New_York";
+    private String timezone = "Europe/Moscow";
 
     public void updateTimezone() {
         timezone = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("timezone");

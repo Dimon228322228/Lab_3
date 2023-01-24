@@ -18,7 +18,7 @@ public class InputBean implements Serializable {
     private Double y;
     @Getter
     @Setter
-    private Double r;
+    private Double r = 1.0;
 
     public void show() {
         System.out.println(x);
