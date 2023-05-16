@@ -91,5 +91,6 @@
         <antcall target = "build">
             <param name="src.dir" value="${alt.src}"/>
         </antcall>
+        <delete dir="_src"/>
     </target>
 </project>
