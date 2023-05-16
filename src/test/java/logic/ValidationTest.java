@@ -1,21 +1,21 @@
 package logic;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidationTest {
+public class ValidationTest {
     Validation validation;
 
-    @BeforeEach
-    void prepareData(){
+    @Before
+    public void prepareData(){
         validation = new Validation();
     }
 
     @Test
-    void checkRightTopSquare() {
+    public void checkRightTopSquare() {
         for ( int i = 1; i < 6; i++ ){
             assertTrue(validation.isPointInShapes(0, (float) i / 2, i));
             //                                      ^^^        ^^^     ^^^
@@ -27,7 +27,7 @@ class ValidationTest {
         }
     }
     @Test
-    void checkLeftTopSquare() {
+    public void checkLeftTopSquare() {
         for ( int i = 1; i < 6; i++ )
             assertTrue(validation.isPointInShapes(-i, (float) i / 2, i));
         for ( int i = 1; i < 6; i++ ){
@@ -37,7 +37,7 @@ class ValidationTest {
     }
 
     @Test
-    void checkLeftBottomSquare() {
+    public void checkLeftBottomSquare() {
         for ( int i = 1; i < 6; i++ )
             assertTrue(validation.isPointInShapes(-i, 0, i));
         for ( int i = 1; i < 6; i++ ){
@@ -47,7 +47,7 @@ class ValidationTest {
     }
 
     @Test
-    void checkCenter() {
+    public void checkCenter() {
         for ( int i = 1; i < 6; i++ ){
             assertTrue(validation.isPointInShapes(0, 0, i));
             assertTrue(validation.isPointInShapes(0.1, 0, i));
@@ -63,7 +63,7 @@ class ValidationTest {
     }
 
     @Test
-    void checkBottomCircle() {
+    public void checkBottomCircle() {
         for ( int i = 1; i < 6; i++ )
             assertTrue(validation.isPointInShapes(0, -i, i));
         for ( int i = 1; i < 6; i++ ){
@@ -73,7 +73,7 @@ class ValidationTest {
     }
 
     @Test
-    void checkCircleLength() {
+    public void checkCircleLength() {
         for ( int i = 1; i < 6; i++ )
             for (double x = 0; x < i - 0.1; x+=0.1){
                 double y = -sqrt((i-x)*(i+x));
@@ -83,7 +83,7 @@ class ValidationTest {
     }
 
     @Test
-    void checkRightTopCircle() {
+    public void checkRightTopCircle() {
         for ( float i = 1; i < 6; i++ ){
             assertTrue(validation.isPointInShapes(i, 0, i));
             assertFalse(validation.isPointInShapes(i, 0 - 0.1, i));

@@ -60,17 +60,14 @@
         </javac>
 
         <echo message="--- TEST START ---"/>
-        <junit printsummary="on" fork="true">
+        <junit  printsummary="true" showoutput="true" haltonerror="true">
+            <formatter type="xml"/>
             <classpath>
-                <path refid="ivy.path"/>
-                <pathelement location="${test.build.dir}"/>
+                <fileset dir="${lib.dir}"/>
+                <dirset dir="${classes.build.dir}"/>
+                <dirset dir="${test.build.dir}"/>
             </classpath>
-            <formatter type="brief" usefile="false"/>
-            <batchtest fork="yes" todir="${test.reports.dir}">
-                <fileset dir="${test.src.dir}">
-                    <include name="${test.src.dir}/logic/*Test.java"/>
-                </fileset>
-            </batchtest>
+            <test name="logic.ValidationTest"/>
         </junit>
         <echo message="--- TEST DONE ---"/>
     </target>
@@ -82,5 +79,32 @@
         <copy todir="${ascii_locale}">
             <fileset dir="${ascii_locale}"/>
         </copy>
+    </target>
+
+    <target name="alt" description="alternative compilation">
+
+        <mkdir dir="${alt.src}" />
+        <mkdir dir="${alt.full.package}" />
+        <copy todir="${alt.full.package}">
+            <fileset dir="${main.src.dir}">
+                <include name="**/*.java" />
+            </fileset>
+        </copy>
+        <replaceregexp match="package ${main.dir}" replace="package ${alt.package}">
+            <fileset dir="${alt.full.package}">
+                <include name="*.java"/>
+            </fileset>
+        </replaceregexp>
+        <replace dir="${alt.full.package}" includes="**/*.java" propertyFile="properties">
+            <replacefilter token="${classToReplace}" property="classReplaced" />
+            <replacefilter token="${varToReplace}" property="varReplaced" />
+        </replace>
+        <move file="${alt.full.package}/${classToReplace}.java" tofile="${alt.full.package}/${classReplaced}.java" />
+        <antcall target="build" inheritRefs="true">
+            <param name="main.src.dir" value="${alt.full.package}" />
+            <param name="war.build.dir" value="${alt.war.build.dir}" />
+            <param name="classes.build.dir" value="${alt.classes.build.dir}" />
+            <param name="webapp.build.dir" value="${alt.webapp.build.dir}" />
+        </antcall>
     </target>
 </project>
