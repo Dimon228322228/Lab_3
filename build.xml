@@ -74,4 +74,13 @@
         </junit>
         <echo message="--- TEST DONE ---"/>
     </target>
+
+    <target name="native2ascii">
+        <native2ascii encoding="${localization.encoding}" src="${localization.files.path}"
+                      dest="${ascii_locale}/resources" ext=".txt" includes="*resources*.*"/>
+        <mkdir dir="${ascii_locale}"/>
+        <copy todir="${ascii_locale}">
+            <fileset dir="${ascii_locale}"/>
+        </copy>
+    </target>
 </project>
