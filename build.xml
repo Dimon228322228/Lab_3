@@ -81,30 +81,15 @@
         </copy>
     </target>
 
-    <target name="alt" description="alternative compilation">
-
-        <mkdir dir="${alt.src}" />
-        <mkdir dir="${alt.full.package}" />
-        <copy todir="${alt.full.package}">
-            <fileset dir="${main.src.dir}">
-                <include name="**/*.java" />
-            </fileset>
+    <target name = "alt" depends= "test"  >
+        <copy todir="${alt.src}">
+            <fileset dir="${src.dir}"/>
         </copy>
-        <replaceregexp match="package ${main.dir}" replace="package ${alt.package}">
-            <fileset dir="${alt.full.package}">
-                <include name="*.java"/>
-            </fileset>
+        <replaceregexp match="low_quadrant" replace="high_quadrant" flags="gm">
+            <fileset dir="${alt.main.src.dir}" includes="/**/*.java" />
         </replaceregexp>
-        <replace dir="${alt.full.package}" includes="**/*.java" propertyFile="properties">
-            <replacefilter token="${classToReplace}" property="classReplaced" />
-            <replacefilter token="${varToReplace}" property="varReplaced" />
-        </replace>
-        <move file="${alt.full.package}/${classToReplace}.java" tofile="${alt.full.package}/${classReplaced}.java" />
-        <antcall target="build" inheritRefs="true">
-            <param name="main.src.dir" value="${alt.full.package}" />
-            <param name="war.build.dir" value="${alt.war.build.dir}" />
-            <param name="classes.build.dir" value="${alt.classes.build.dir}" />
-            <param name="webapp.build.dir" value="${alt.webapp.build.dir}" />
+        <antcall target = "build">
+            <param name="src.dir" value="${alt.src}"/>
         </antcall>
     </target>
 </project>
