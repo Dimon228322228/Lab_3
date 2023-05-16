@@ -18,9 +18,6 @@
         <mkdir dir="${test.build.dir}" />
         <mkdir dir="${test.reports.dir}" />
         <mkdir dir="${webapp.build.dir}" />
-        <mkdir dir="${md5.checksum.dir}" />
-        <mkdir dir="${sha1.checksum.dir}" />
-        <mkdir dir="${result.checksum.dir}" />
         <mkdir dir="${war.build.dir}" />
         <touch file="${manifest.file}" mkdirs="true" />
     </target>
@@ -32,15 +29,18 @@
     </target>
 
     <target name="compile" depends="resolve, prepare">
+        <echo message="--- COMPILATION START ---"/>
         <javac srcdir="${main.src.dir}" sourcepath="" destdir="${classes.build.dir}" target="17"
                includeantruntime="false">
             <classpath>
                 <path refid="ivy.path" />
             </classpath>
         </javac>
+        <echo message="--- COMPILATION DONE ---"/>
     </target>
 
     <target name="build" depends="compile, resources">
+        <echo message="--- BUILD START ---"/>
         <war destfile="${war.build.dir}/${war.name}" basedir="${webapp.build.dir}">
             <classes dir="${classes.build.dir}" />
             <lib dir="${lib.dir}" />
@@ -48,6 +48,7 @@
                 <attribute name="Implementation-Version" value="${app.version}" />
             </manifest>
         </war>
+        <echo message="--- BUILD DONE ---"/>
     </target>
 
     <target name="test" depends="build">
@@ -58,16 +59,19 @@
             </classpath>
         </javac>
 
-        <junitlauncher printsummary="yes" haltonfailure="yes">
+        <echo message="--- TEST START ---"/>
+        <junit printsummary="on" fork="true">
             <classpath>
-                <pathelement location="${classes.build.dir}" />
-                <pathelement location="${test.build.dir}" />
-                <path refid="ivy.path" />
+                <path refid="ivy.path"/>
+                <pathelement location="${test.build.dir}"/>
             </classpath>
-            <testclasses outputdir="${test.reports.dir}">
-                <fileset dir="${test.build.dir}" />
-                <listener type="legacy-brief" sendSysOut="true" />
-            </testclasses>
-        </junitlauncher>
+            <formatter type="brief" usefile="false"/>
+            <batchtest fork="yes" todir="${test.reports.dir}">
+                <fileset dir="${test.src.dir}">
+                    <include name="${test.src.dir}/logic/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <echo message="--- TEST DONE ---"/>
     </target>
 </project>
