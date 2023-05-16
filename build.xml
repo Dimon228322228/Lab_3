@@ -1,20 +1,73 @@
-<project name="Lab3" default="build" basedir=".">
-    <target name="compile">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes">
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="ant-project" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+    <property environment="env" />
+    <property file="build.properties" />
+
+    <target name="resolve">
+        <ivy:retrieve
+                pattern="${lib.dir}/[artifact](-[classifier])-[revision].[ext]" />
+        <ivy:cachepath pathid="ivy.path" conf="default" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${classes.build.dir}" />
+        <mkdir dir="${test.build.dir}" />
+        <mkdir dir="${test.reports.dir}" />
+        <mkdir dir="${webapp.build.dir}" />
+        <mkdir dir="${md5.checksum.dir}" />
+        <mkdir dir="${sha1.checksum.dir}" />
+        <mkdir dir="${result.checksum.dir}" />
+        <mkdir dir="${war.build.dir}" />
+        <touch file="${manifest.file}" mkdirs="true" />
+    </target>
+
+    <target name="resources" depends="prepare">
+        <copy toDir="${webapp.build.dir}">
+            <fileset dir="${webapp.src.dir}" />
+        </copy>
+    </target>
+
+    <target name="compile" depends="resolve, prepare">
+        <javac srcdir="${main.src.dir}" sourcepath="" destdir="${classes.build.dir}" target="17"
+               includeantruntime="false">
             <classpath>
-                <fileset dir="lib"/>
+                <path refid="ivy.path" />
             </classpath>
         </javac>
     </target>
-    <target name="build" depends="compile">
-        <jar destfile="build/${ant.project.name}.jar">
-            <zipfileset dir="build/classes" prefix="WEB-INF/classes"/>
-            <zipfileset dir="lib" prefix="WEB-INF/lib"/>
-            <fileset dir="src/main/webapp"/>
-        </jar>
+
+    <target name="build" depends="compile, resources">
+        <war destfile="${war.build.dir}/${war.name}" basedir="${webapp.build.dir}">
+            <classes dir="${classes.build.dir}" />
+            <lib dir="${lib.dir}" />
+            <manifest>
+                <attribute name="Implementation-Version" value="${app.version}" />
+            </manifest>
+        </war>
     </target>
-    <target name="clean">
-        <delete dir="build/classes"/>
+
+    <target name="test" depends="build">
+        <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement path="${classes.build.dir}" />
+                <path refid="ivy.path" />
+            </classpath>
+        </javac>
+
+        <junitlauncher printsummary="yes" haltonfailure="yes">
+            <classpath>
+                <pathelement location="${classes.build.dir}" />
+                <pathelement location="${test.build.dir}" />
+                <path refid="ivy.path" />
+            </classpath>
+            <testclasses outputdir="${test.reports.dir}">
+                <fileset dir="${test.build.dir}" />
+                <listener type="legacy-brief" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
     </target>
 </project>

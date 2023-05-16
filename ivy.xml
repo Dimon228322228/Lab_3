@@ -1,0 +1,31 @@
+<ivy-module version="2.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:maven="https://maven.apache.org/xsd/maven-4.0.0.xsd"
+            xsi:noNamespaceSchemaLocation="https://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="" module="ant-project" />
+
+    <dependencies>
+        <dependency org="org.apache.ant" name="ant-junitlauncher" rev="1.10.13" />
+
+        <dependency org="org.projectlombok" name="lombok" rev="1.18.24" />
+
+        <dependency org="jakarta.servlet" name="jakarta.servlet-api" rev="6.0.0" />
+        <dependency org="jakarta.faces" name="jakarta.faces-api" rev="4.0.1" />
+        <dependency org="jakarta.annotation" name="jakarta.annotation-api" rev="2.1.1" />
+        <dependency org="jakarta.enterprise" name="jakarta.enterprise.cdi-api" rev="4.0.1" />
+        <dependency org="jakarta.persistence" name="jakarta.persistence-api" rev="3.1.0" />
+
+        <dependency org="org.primefaces" name="primefaces" rev="12.0.0">
+            <artifact name="primefaces" maven:classifier="jakarta" type="jar" ext="jar" />
+        </dependency>
+
+        <dependency org="org.postgresql" name="postgresql" rev="42.5.0" />
+        <dependency org="org.hibernate.orm" name="hibernate-core" rev="6.1.4.Final" />
+
+        <dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.13.4" />
+        <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.13.4" />
+        <dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.13.4" />
+        <dependency org="com.fasterxml.jackson.module" name="jackson-module-parameter-names"
+                    rev="2.13.4" />
+    </dependencies>
+</ivy-module>
