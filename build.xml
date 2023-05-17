@@ -32,6 +32,9 @@
         <copy toDir="${webapp.build.dir}">
             <fileset dir="${webapp.src.dir}" />
         </copy>
+        <copy toDir="${lib.dir}">
+            <fileset dir="lib"/>
+        </copy>
     </target>
 
     <target name="compile" depends="resolve, prepare">
