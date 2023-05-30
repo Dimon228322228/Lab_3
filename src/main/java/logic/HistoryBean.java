@@ -6,6 +6,8 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
+import monitoring.HitCounter;
+import monitoring.StatMissing;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +35,9 @@ public class HistoryBean implements Serializable {
 
     @Transactional
     public void clear() {
+        HitCounter.getInstance().setCount(0);
+        HitCounter.getInstance().setHitCount(0);
+        StatMissing.getInstance().setMissStat(0);
         hitResultDao.clear();
     }
 }

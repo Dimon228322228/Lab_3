@@ -45,6 +45,8 @@ dependencies {
     providedRuntime('org.eclipse.persistence:eclipselink:4.0.0-RC2')
     providedRuntime('org.wildfly:jipijapa-eclipselink:27.0.1.Final')
 
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha7'
+
     // providedRuntime - not packaged in war (provided by container)
 
     implementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

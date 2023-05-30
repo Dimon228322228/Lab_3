@@ -7,17 +7,24 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import java.time.Instant;
 import jakarta.inject.Named;
+import lombok.extern.slf4j.Slf4j;
+import monitoring.HitCounter;
+import monitoring.StatMissing;
 
 import java.io.Serializable;
 
 @Named
 @SessionScoped
+@Slf4j
 public class AreaCheckBean implements Serializable {
     @Inject
     HistoryBean historyBean;
 
     public void shoot(double x, double y, double r) {
         HitResult hitResult = doCheck(x,y,r);
+        HitCounter.getInstance().check(hitResult.getShot().isRes());
+        log.info("The count of hits is {}", HitCounter.getInstance().getCount());
+        StatMissing.getInstance().calculatePercentage(HitCounter.getInstance().getCount(), HitCounter.getInstance().getHitCount());
         historyBean.add(hitResult);
     }
 
